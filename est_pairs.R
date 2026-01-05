@@ -22,22 +22,9 @@ inic <- c(log(1), log(0.1), 1)
 # Precalcular grilla de envoltura (kvec) una vez
 kvec <- as.matrix(expand.grid(list(-1:1, -1:1)))
 
-# Función de covarianza
-cov_f <- function(h, s2, alfa, eleccion) {
-  if (eleccion == 1) {
-    return(s2 * exp(-3 * h / alfa))
-  }
-  if (eleccion == 2) {
-    return(s2 * exp(-4.7619 * h / alfa) * (1 + 4.7619 * h / alfa))
-  }
-  if (eleccion == 3) {
-    return(s2 * exp(-5.91865 * h / alfa) *
-      (1 + 5.91865 * h / alfa + (5.91865^2 / 3) * h^2 / alfa^2))
-  }
-  stop("`eleccion` debe ser 1, 2 o 3.")
-}
 
-# Worker: estima para una simulación i dado un escenario (ds, eleccion, index_ds)
+
+
 est_pair <- function(i, ds, eleccion, index_ds) {
   w <- simul_total[[i]]$value
 
@@ -75,7 +62,7 @@ est_pair <- function(i, ds, eleccion, index_ds) {
     )
   )
 
-  # <<< AQUÍ estaba el HTML roto en tu script >>>
+
   c(
     s2 = exp(estimacion$par[1]),
     alfa = exp(estimacion$par[2]),
@@ -84,7 +71,6 @@ est_pair <- function(i, ds, eleccion, index_ds) {
   )
 }
 
-# ===== Paralelización: cluster una vez =====
 cl <- makeCluster(nucleos)
 
 clusterEvalQ(cl, library(mvtnorm))
@@ -94,7 +80,6 @@ clusterExport(
   envir = environment()
 )
 
-# (Opcional pero recomendado para reproducibilidad)
 clusterSetRNGStream(cl, iseed = 42)
 
 run_scenario <- function(ds, eleccion, sim_ids, out_file) {
@@ -118,7 +103,7 @@ run_scenario <- function(ds, eleccion, sim_ids, out_file) {
   invisible(res_df)
 }
 
-# ===== Escenarios (mismo diseño que tu script) =====
+
 # ds = 0.1
 run_scenario(0.10, 1, 1:600,     "est_pair_1_01.rds")
 run_scenario(0.10, 2, 601:1200,  "est_pair_2_01.rds")
