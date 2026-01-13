@@ -1,0 +1,37 @@
+>>> eleccion = 1 
+    s2   = 1.273225
+    alfa = 0.428918
+    mu   = 4.748250 rad
+    neglogCL = 1672.213263
+    logCL    = -1672.213263
+    conv=0 | time=41.33s
+
+>>> eleccion = 2 
+    s2   = 1.275910
+    alfa = 0.274006
+    mu   = 4.750303 rad
+    neglogCL = 1663.959803
+    logCL    = -1663.959803
+    conv=0 | time=21.67s
+
+>>> eleccion = 3 
+    s2   = 1.266743
+    alfa = 0.238509
+    mu   = 4.750812 rad
+    neglogCL = 1663.451150
+    logCL    = -1663.451150
+    conv=0 | time=37.34s
+
+> 
+> best_idx <- which.max(sapply(fits, `[[`, "logcl"))
+> best_fit <- fits[[best_idx]]
+> 
+> cat("============================================================\n")
+============================================================
+> cat("MEJOR MODELO (por mayor logCL): eleccion =", best_fit$eleccion, "\n")
+MEJOR MODELO (por mayor logCL): eleccion = 3 
+> cat(sprintf("s2=%.6f | alfa=%.6f | mu=%.6f | logCL=%.6f\n",
++             best_fit$s2, best_fit$alfa, best_fit$mu, best_fit$logcl))
+s2=1.266743 | alfa=0.238509 | mu=4.750812 | logCL=-1663.451150
+> cat("============================================================\n")
+============================================================
